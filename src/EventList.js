@@ -8,40 +8,9 @@ class EventList extends Component {
   constructor() {
     super();
     this.state = {
-      events: [],
       sortBy: null,
       filter: null
     }
-  }
-
-  componentDidMount() {
-    fetch('https://api.eventable.com/v1/token-auth/', {
-      method: 'POST',
-      body: JSON.stringify({
-        'username': 'candidate.5545@eventable.com',
-        'password': 'R8VMaFVK'
-      }),
-      headers: {
-        "Content-Type": "application/json"
-      }
-    })
-    .then(res => res.json())
-    .then(res => {
-      const token = res.token;
-      return fetch('https://api.eventable.com/v1/events/?format=json', {
-        method: 'GET',
-        headers: {
-          "Content-Type": "application/json",
-          "Authorization": `Token ${token}`
-        }
-      })
-    })
-    .then(res => res.json())
-    .then(res => {
-      this.setState({
-        events: res.results
-      })
-    });
   }
 
   sortEvents(events, sortBy) {
@@ -73,7 +42,7 @@ class EventList extends Component {
   }
 
   render() {
-    let events = this.state.events;
+    let events = this.props.events;
     if (this.state.sortBy) {
       events = this.sortEvents(events, this.state.sortBy)
     }
