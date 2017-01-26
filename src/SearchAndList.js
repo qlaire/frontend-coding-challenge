@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Grid, Row } from 'react-bootstrap';
+import { Row } from 'react-bootstrap';
 import EventList from './EventList';
 import Search from './Search';
 

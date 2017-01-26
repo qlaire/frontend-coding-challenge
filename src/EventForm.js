@@ -30,7 +30,7 @@ class EventForm extends Component {
 
   getTitleValidationState() {
     if (this.state.titleBlur) {
-      return !this.state.title.length ? 'error' : 'success';
+      return this.state.title.length === 0 ? 'error' : 'success';
     }
   }
 
@@ -45,7 +45,7 @@ class EventForm extends Component {
   isFormValid() {
     let endDateAndTime = this.createFullTimeStamp(this.state.endDate, this.state.endTime);
     let startDateAndTime = this.createFullTimeStamp(this.state.startDate, this.state.startTime);
-    if (!this.state.title.length || endDateAndTime.isBefore(startDateAndTime)) {
+    if (this.state.title.length === 0 || !endDateAndTime.isValid() || !startDateAndTime.isValid() || endDateAndTime.isBefore(startDateAndTime)) {
       this.setState({formValid: false});
     } else {
       this.setState({formValid: true});
@@ -80,7 +80,7 @@ class EventForm extends Component {
 
   render() {
     return (
-      <form>
+      <form onSubmit={() => {}}>
         <FormGroup
           controlId="title"
           validationState={this.getTitleValidationState()}
@@ -138,13 +138,16 @@ class EventForm extends Component {
             type="time"
             value={this.state.endTime}
             onChange={this.handleEndTimeChange}
-            onBlur={() => this.setState({endTimeBlur: true})}
+            onBlur={() => {
+              this.setState({endTimeBlur: true});
+              this.isFormValid();
+            }}
           />
           <FormControl.Feedback />
           <HelpBlock>End time must be later than start time.</HelpBlock>
 
         </FormGroup>
-        <Button type='submit' bsStyle='success' disabled={this.state.formValid}>Submit</Button>
+        <Button type='submit' bsStyle='success' disabled={!this.state.formValid}>Submit</Button>
       </form>
     );
   }
