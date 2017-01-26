@@ -10,6 +10,7 @@ class App extends Component {
     this.state = {
       events: [],
     };
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   componentDidMount() {
@@ -42,6 +43,12 @@ class App extends Component {
     });
   }
 
+  handleSubmit(newEvent) {
+    this.setState({
+      events: [...this.state.events, newEvent]
+    });
+  }
+
   render() {
     return (
       <div>
@@ -50,7 +57,7 @@ class App extends Component {
             <h1>My Events</h1>
           </Row>
           <Row>
-            <EventForm></EventForm>
+            <EventForm handleSubmit={this.handleSubmit}></EventForm>
           </Row>
           <SearchAndList events={this.state.events} />
         </Grid>

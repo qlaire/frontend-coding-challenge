@@ -22,6 +22,7 @@ class EventForm extends Component {
     this.handleStartTimeChange = this.handleStartTimeChange.bind(this);
     this.handleEndDateChange = this.handleEndDateChange.bind(this);
     this.handleEndTimeChange = this.handleEndTimeChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   createFullTimeStamp(date, time) {
@@ -77,10 +78,32 @@ class EventForm extends Component {
     this.isFormValid()
   }
 
+  handleSubmit(e) {
+    e.preventDefault();
+    let endDateAndTime = this.createFullTimeStamp(this.state.endDate, this.state.endTime);
+    let startDateAndTime = this.createFullTimeStamp(this.state.startDate, this.state.startTime);
+    const event = {
+      title: this.state.title,
+      start_time: startDateAndTime,
+      end_time: endDateAndTime
+    };
+    this.setState({
+      title: '',
+      startDate: '',
+      startTime: '',
+      endDate: '',
+      endTime: '',
+      titleBlur: false,
+      endTimeBlur: false,
+      formValid: false
+    });
+    this.props.handleSubmit(event);
+  }
+
 
   render() {
     return (
-      <form onSubmit={() => {}}>
+      <form onSubmit={this.handleSubmit}>
         <FormGroup
           controlId="title"
           validationState={this.getTitleValidationState()}
