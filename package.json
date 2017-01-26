@@ -2,6 +2,11 @@
   "name": "frontend-technical-screen",
   "version": "0.0.1",
   "private": true,
+  "jest": {
+    "globals": {
+      "window": true
+    }
+  },
   "devDependencies": {
     "react-scripts": "0.7.0"
   },

@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import ReactDOM from 'react-dom';
 import { FormGroup, FormControl } from 'react-bootstrap';
 
 class Search extends Component {
@@ -8,8 +7,8 @@ class Search extends Component {
     this.handleChange = this.handleChange.bind(this);
   }
 
-  handleChange() {
-    let query = ReactDOM.findDOMNode(this.searchInput).value.toLowerCase();
+  handleChange(e) {
+    const query = e.target.value;
     this.props.search(query);
   }
 
@@ -20,7 +19,6 @@ class Search extends Component {
           <FormControl
             type="text"
             placeholder="Search by title"
-            ref={ component => this.searchInput = component }
             onChange={this.handleChange}
           />
         </FormGroup>

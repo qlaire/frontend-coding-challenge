@@ -5,13 +5,13 @@ import moment from 'moment';
 const EventItem = (props) => {
   const event = props.event;
   return (
-    <div>
+    <div className="event-item">
       <Panel header={<h3>{event.title}</h3>}>
-        <p><span className="time">Start Time:</span> {moment(event.start_time).format('MMMM Do YYYY, h:mm:ss a')}</p>
-        <p><span className="time">End Time:</span> {moment(event.end_time).format('MMMM Do YYYY, h:mm:ss a')}</p>
-        <p>All day: {event.all_day ? "Yes" : "No"}</p>
+        <p><span className="field">Start Time:</span> {moment(event.start_time).format('MMMM Do YYYY, h:mm:ss a')}</p>
+        <p><span className="field">End Time:</span> {moment(event.end_time).format('MMMM Do YYYY, h:mm:ss a')}</p>
+        <p><span className="field">All day:</span> {event.all_day ? "Yes" : "No"}</p>
         <p>{event.description ? event.description : ''}</p>
-        <p>{event.url ? <a href={event.url}>More info</a> : ''}</p>
+        <p>{event.url ? <a href={event.url}><span className="field">More info</span></a> : ''}</p>
       </Panel>
 
     </div>

@@ -1,24 +1,49 @@
-.App {
+@import url("https://fonts.googleapis.com/css?family=Bungee+Shade|Work+Sans:400,700");
+
+.my-events {
+  font-family: 'Work Sans', sans-serif;
   text-align: center;
 }
 
-.App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 80px;
+.sorting-buttons {
+  display: inline-block;
 }
 
-.App-header {
-  background-color: #222;
-  height: 150px;
-  padding: 20px;
-  color: white;
+.form-button {
+  margin: 20px 0 20px 0;
 }
 
-.App-intro {
-  font-size: large;
+.event-form {
+  text-align: left;
 }
 
-@keyframes App-logo-spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
+.submit-button {
+  margin-bottom: 20px;
+}
+
+h1 {
+  font-family: 'Bungee Shade', cursive;
+  font-size: 4em;
+}
+
+.event-item {
+  text-align: left;
+}
+
+.event-item .panel-heading {
+  text-align: center;
+}
+
+.event-item h3 {
+  font-weight: 700;
+}
+
+span.field {
+  font-weight: 700;
+}
+
+@media (min-width: 1200px) {
+    .container{
+        max-width: 700px;
+    }
 }

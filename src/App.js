@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Grid, Row } from 'react-bootstrap';
+import { Grid, Row, Button, Glyphicon } from 'react-bootstrap';
 import './App.css';
 import SearchAndList from './SearchAndList';
 import EventForm from './EventForm';
@@ -9,8 +9,10 @@ class App extends Component {
     super();
     this.state = {
       events: [],
+      showForm: false
     };
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.toggleForm = this.toggleForm.bind(this);
   }
 
   componentDidMount() {
@@ -58,15 +60,34 @@ class App extends Component {
     });
   }
 
+  toggleForm() {
+    this.setState({showForm: !this.state.showForm})
+  }
+
   render() {
     return (
-      <div>
+      <div className="my-events">
         <Grid>
           <Row>
             <h1>My Events</h1>
           </Row>
           <Row>
-            <EventForm handleSubmit={this.handleSubmit}></EventForm>
+            <Button
+              bsStyle="success"
+              className="form-button"
+              onClick={this.toggleForm}
+            >
+              {
+                this.state.showForm
+                  ? <span><Glyphicon glyph="minus" /> Close Form</span>
+                  : <span><Glyphicon glyph="plus" /> Add Event</span>
+              }
+            </Button>
+            {
+              this.state.showForm
+                ? <EventForm handleSubmit={this.handleSubmit}></EventForm>
+                : null
+            }
           </Row>
           <SearchAndList events={this.state.events} />
         </Grid>

@@ -48,7 +48,7 @@ class EventList extends Component {
     }
     return (
       <div>
-        <ButtonToolbar>
+        <ButtonToolbar className="sorting-buttons">
           <Button bsStyle="primary" onClick={() => this.setState({sortBy: 'title'})}>Sort by Title</Button>
           <Button bsStyle="primary" onClick={() => this.setState({sortBy: 'startTime'})}>Sort by Start Time</Button>
         </ButtonToolbar>

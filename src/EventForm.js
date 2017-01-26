@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { FormGroup, ControlLabel, FormControl, HelpBlock, Button } from 'react-bootstrap';
+import { FormGroup, ControlLabel, FormControl, HelpBlock, Button, Form, Col } from 'react-bootstrap';
 import moment from 'moment';
 
 class EventForm extends Component {
@@ -37,15 +37,15 @@ class EventForm extends Component {
 
   getEndTimeValidationState() {
     if (this.state.endTimeBlur) {
-      let endDateAndTime = this.createFullTimeStamp(this.state.endDate, this.state.endTime);
-      let startDateAndTime = this.createFullTimeStamp(this.state.startDate, this.state.startTime);
+      const endDateAndTime = this.createFullTimeStamp(this.state.endDate, this.state.endTime);
+      const startDateAndTime = this.createFullTimeStamp(this.state.startDate, this.state.startTime);
       return endDateAndTime.isBefore(startDateAndTime) ? 'error' : 'success';
     }
   }
 
   isFormValid() {
-    let endDateAndTime = this.createFullTimeStamp(this.state.endDate, this.state.endTime);
-    let startDateAndTime = this.createFullTimeStamp(this.state.startDate, this.state.startTime);
+    const endDateAndTime = this.createFullTimeStamp(this.state.endDate, this.state.endTime);
+    const startDateAndTime = this.createFullTimeStamp(this.state.startDate, this.state.startTime);
     if (this.state.title.length === 0 || !endDateAndTime.isValid() || !startDateAndTime.isValid() || endDateAndTime.isBefore(startDateAndTime)) {
       this.setState({formValid: false});
     } else {
@@ -54,34 +54,29 @@ class EventForm extends Component {
   }
 
   handleTitleChange(e) {
-    this.setState({title: e.target.value});
-    this.isFormValid()
+    this.setState({title: e.target.value}, this.isFormValid);
   }
 
   handleStartDateChange(e) {
-    this.setState({startDate: e.target.value});
-    this.isFormValid()
+    this.setState({startDate: e.target.value}, this.isFormValid);
   }
 
   handleStartTimeChange(e) {
-    this.setState({startTime: e.target.value});
-    this.isFormValid()
+    this.setState({startTime: e.target.value}, this.isFormValid);
   }
 
   handleEndDateChange(e) {
-    this.setState({endDate: e.target.value});
-    this.isFormValid()
+    this.setState({endDate: e.target.value}, this.isFormValid);
   }
 
   handleEndTimeChange(e) {
-    this.setState({endTime: e.target.value});
-    this.isFormValid()
+    this.setState({endTime: e.target.value}, this.isFormValid);
   }
 
   handleSubmit(e) {
     e.preventDefault();
-    let endDateAndTime = this.createFullTimeStamp(this.state.endDate, this.state.endTime);
-    let startDateAndTime = this.createFullTimeStamp(this.state.startDate, this.state.startTime);
+    const endDateAndTime = this.createFullTimeStamp(this.state.endDate, this.state.endTime);
+    const startDateAndTime = this.createFullTimeStamp(this.state.startDate, this.state.startTime);
     const event = {
       title: this.state.title,
       start_time: startDateAndTime,
@@ -103,75 +98,93 @@ class EventForm extends Component {
 
   render() {
     return (
-      <form onSubmit={this.handleSubmit}>
+      <Form horizontal className="event-form" onSubmit={this.handleSubmit}>
         <FormGroup
           controlId="title"
           validationState={this.getTitleValidationState()}
         >
-          <ControlLabel>Title</ControlLabel>
-          <FormControl
-            type="text"
-            value={this.state.title}
-            placeholder="Enter title"
-            onChange={this.handleTitleChange}
-            onBlur={() => this.setState({titleBlur: true})}
-          />
-          <FormControl.Feedback />
-          <HelpBlock>Title is required.</HelpBlock>
+          <Col componentClass={ControlLabel} sm={2}>
+            Title
+          </Col>
+          <Col sm={10}>
+            <FormControl
+              type="text"
+              value={this.state.title}
+              placeholder="Enter title"
+              onChange={this.handleTitleChange}
+              onBlur={() => this.setState({titleBlur: true})}
+            />
+            <FormControl.Feedback />
+            <HelpBlock>Title is required.</HelpBlock>
+          </Col>
         </FormGroup>
         <FormGroup
           controlId="startDate"
         >
-          <ControlLabel>Start Date</ControlLabel>
-          <FormControl
-            type="date"
-            value={this.state.startDate}
-            onChange={this.handleStartDateChange}
-          />
-
+          <Col componentClass={ControlLabel} sm={2}>
+            Start Date
+          </Col>
+          <Col sm={10}>
+            <FormControl
+              type="date"
+              value={this.state.startDate}
+              onChange={this.handleStartDateChange}
+            />
+          </Col>
         </FormGroup>
         <FormGroup
           controlId="startTime"
         >
-          <ControlLabel>Start Time</ControlLabel>
-          <FormControl
-            type="time"
-            value={this.state.startTime}
-            onChange={this.handleStartTimeChange}
-          />
-
+          <Col componentClass={ControlLabel} sm={2}>
+            Start Time
+          </Col>
+          <Col sm={10}>
+            <FormControl
+              type="time"
+              value={this.state.startTime}
+              onChange={this.handleStartTimeChange}
+            />
+          </Col>
         </FormGroup>
         <FormGroup
           controlId="endDate"
         >
-          <ControlLabel>End Date</ControlLabel>
-          <FormControl
-            type="date"
-            value={this.state.endDate}
-            onChange={this.handleEndDateChange}
-          />
+          <Col componentClass={ControlLabel} sm={2}>
+            End Date
+          </Col>
+          <Col sm={10}>
+            <FormControl
+              type="date"
+              value={this.state.endDate}
+              onChange={this.handleEndDateChange}
+            />
+          </Col>
 
         </FormGroup>
         <FormGroup
           controlId="endTime"
           validationState={this.getEndTimeValidationState()}
         >
-          <ControlLabel>End Time</ControlLabel>
-          <FormControl
-            type="time"
-            value={this.state.endTime}
-            onChange={this.handleEndTimeChange}
-            onBlur={() => {
-              this.setState({endTimeBlur: true});
-              this.isFormValid();
-            }}
-          />
-          <FormControl.Feedback />
-          <HelpBlock>End time must be later than start time.</HelpBlock>
-
+          <Col componentClass={ControlLabel} sm={2}>
+            End Time
+          </Col>
+          <Col sm={10}>
+            <FormControl
+              type="time"
+              value={this.state.endTime}
+              onChange={this.handleEndTimeChange}
+              onBlur={() => this.setState({endTimeBlur: true})}
+            />
+            <FormControl.Feedback />
+            <HelpBlock>End time must be later than start time.</HelpBlock>
+          </Col>
         </FormGroup>
-        <Button type='submit' bsStyle='success' disabled={!this.state.formValid}>Submit</Button>
-      </form>
+        <FormGroup>
+          <Col smOffset={2} sm={10}>
+            <Button type='submit' className="submit-button" bsStyle='success' disabled={!this.state.formValid}>Submit</Button>
+          </Col>
+        </FormGroup>
+      </Form>
     );
   }
 }
